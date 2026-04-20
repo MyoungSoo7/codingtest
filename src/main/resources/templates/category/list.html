@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Categories</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Categories</h2>
+    </div>
+
+    <form th:action="@{/categories}" method="post" class="row g-2 mb-4">
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="name" placeholder="Category name" required>
+        </div>
+        <div class="col-md-5">
+            <input type="text" class="form-control" name="description" placeholder="Description">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Add</button>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Problems</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="entry : ${categoriesWithCount}">
+                <td colspan="2">
+                    <form th:action="@{/categories/{id}(id=${entry.category.id})}" method="post" class="d-flex gap-1">
+                        <input type="text" class="form-control form-control-sm" name="name" th:value="${entry.category.name}" required style="max-width:200px">
+                        <input type="text" class="form-control form-control-sm" name="description" th:value="${entry.category.description}">
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+                    </form>
+                </td>
+                <td th:text="${entry.problemCount}"></td>
+                <td>
+                    <form th:action="@{/categories/{id}/delete(id=${entry.category.id})}" method="post" style="display:inline">
+                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Delete this category?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
