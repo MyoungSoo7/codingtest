@@ -41,7 +41,7 @@
 | title | String (not null) | 문제 제목 |
 | sourceUrl | String | 출처 링크 (백준/프로그래머스 URL) |
 | difficulty | Enum: EASY, MEDIUM, HARD | 난이도 |
-| status | Enum: NOT_ATTEMPTED, SOLVED, FAILED, RETRY | 풀이 상태 |
+| status | Enum: NOT_ATTEMPTED, SOLVED, FAILED, RETRY (default: NOT_ATTEMPTED) | 풀이 상태 |
 | categories | Set\<Category\> (ManyToMany) | 연결된 카테고리 목록 |
 | createdAt | LocalDateTime | 생성일시 |
 | updatedAt | LocalDateTime | 수정일시 |
@@ -60,8 +60,13 @@
 
 ### Relationships
 
-- Problem ↔ Category: ManyToMany (join table: problem_category)
-- Problem → Solution: OneToMany (한 문제에 여러 풀이)
+- Problem ↔ Category: ManyToMany (join table: problem_category). 카테고리 삭제 시 join table 엔트리만 제거 (문제는 유지)
+- Problem → Solution: OneToMany (한 문제에 여러 풀이, cascade delete)
+
+### Auditing
+
+- `createdAt`, `updatedAt` 필드는 JPA Auditing (`@CreatedDate`, `@LastModifiedDate`) 사용
+- `CodingtestApplication`에 `@EnableJpaAuditing` 추가
 
 ## Package Structure
 
@@ -94,12 +99,13 @@ lemuel.com.codingtest
 
 - 상태별 문제 수 카드 (전체 / SOLVED / FAILED / RETRY / NOT_ATTEMPTED)
 - 카테고리별 진행률 바
-- 최근 등록/수정된 문제 5개
+- 최근 등록/수정된 문제 5개 (`updatedAt` 기준 역순)
 
 ### Problem List (`GET /problems`)
 
 - 테이블: 제목, 난이도 뱃지, 카테고리 태그, 상태 뱃지, 출처 링크
 - 필터: 카테고리 드롭다운, 난이도 셀렉트, 상태 셀렉트, 검색어 입력
+- 기본 정렬: `updatedAt` 역순. 제목/난이도/상태 컬럼 클릭으로 정렬 변경 가능
 - 문제 등록 버튼
 
 ### Problem Create (`GET /problems/new`, `POST /problems`)
@@ -128,6 +134,11 @@ lemuel.com.codingtest
 ### Solution Edit (`GET /problems/{id}/solutions/{sid}/edit`, `POST /problems/{id}/solutions/{sid}`)
 
 - 기존 풀이 수정 폼
+- 저장 후 문제 상세로 리다이렉트
+
+### Solution Delete (`POST /problems/{id}/solutions/{sid}/delete`)
+
+- 풀이 삭제 후 문제 상세로 리다이렉트
 
 ### Category Management (`GET /categories`)
 
@@ -143,7 +154,7 @@ lemuel.com.codingtest
 ## Key Design Decisions
 
 1. **도메인형 패키지 구조**: 계층형(controller/service/repository) 대신 도메인별(category/problem/solution) 패키지로 관련 코드를 한곳에 모음
-2. **H2 파일 모드**: 애플리케이션 재시작 시에도 데이터 유지. 나중에 다른 DB로 전환 용이
+2. **H2 파일 모드**: `jdbc:h2:file:./data/codingtest` 경로에 저장. 애플리케이션 재시작 시에도 데이터 유지. 나중에 다른 DB로 전환 용이
 3. **DTO 최소화**: 개인 학습 도구이므로 초기에는 Entity 직접 사용, 필요 시 추가
 4. **Bootstrap + CDN**: 별도 프론트엔드 빌드 없이 깔끔한 UI 구성
 5. **카테고리 다대다**: 하나의 문제가 여러 카테고리에 속할 수 있도록 ManyToMany 관계
