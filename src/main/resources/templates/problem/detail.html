@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 th:text="${problem.title}"></h2>
+        <div>
+            <a th:href="@{/problems/{id}/edit(id=${problem.id})}" class="btn btn-outline-primary btn-sm">Edit</a>
+            <form th:action="@{/problems/{id}/delete(id=${problem.id})}" method="post" style="display:inline">
+                <button type="submit" class="btn btn-outline-danger btn-sm"
+                        onclick="return confirm('Delete this problem and all solutions?')">Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <p>
+                <strong>Difficulty:</strong>
+                <span class="badge" th:classappend="${problem.difficulty.name() == 'EASY' ? 'badge-easy' : (problem.difficulty.name() == 'MEDIUM' ? 'badge-medium' : 'badge-hard')}"
+                      th:text="${problem.difficulty}"></span>
+            </p>
+            <p th:if="${!problem.categories.isEmpty()}">
+                <strong>Categories:</strong>
+                <span th:each="cat : ${problem.categories}" class="badge bg-info me-1" th:text="${cat.name}"></span>
+            </p>
+            <p th:if="${problem.sourceUrl}">
+                <strong>Source:</strong> <a th:href="${problem.sourceUrl}" target="_blank" th:text="${problem.sourceUrl}"></a>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <form th:action="@{/problems/{id}/status(id=${problem.id})}" method="post" class="d-flex gap-2">
+                <select class="form-select form-select-sm" name="status">
+                    <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}" th:selected="${problem.status == s}"></option>
+                </select>
+                <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Solutions</h4>
+        <a th:href="@{/problems/{id}/solutions/new(id=${problem.id})}" class="btn btn-success btn-sm">Add Solution</a>
+    </div>
+
+    <div th:if="${problem.solutions.isEmpty()}" class="text-muted">No solutions yet.</div>
+
+    <div th:each="sol : ${problem.solutions}" class="card mb-3">
+        <div class="card-header d-flex justify-content-between">
+            <span>
+                <span class="badge bg-secondary" th:text="${sol.language}"></span>
+                <small class="text-muted ms-2" th:text="${#temporals.format(sol.createdAt, 'yyyy-MM-dd HH:mm')}"></small>
+            </span>
+            <span>
+                <a th:href="@{/problems/{pid}/solutions/{sid}/edit(pid=${problem.id}, sid=${sol.id})}" class="btn btn-outline-primary btn-sm">Edit</a>
+                <form th:action="@{/problems/{pid}/solutions/{sid}/delete(pid=${problem.id}, sid=${sol.id})}" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this solution?')">Delete</button>
+                </form>
+            </span>
+        </div>
+        <div class="card-body">
+            <pre><code th:class="${sol.language.name().toLowerCase()}" th:text="${sol.code}"></code></pre>
+            <div th:if="${sol.note}" class="mt-2">
+                <strong>Notes:</strong>
+                <p th:text="${sol.note}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

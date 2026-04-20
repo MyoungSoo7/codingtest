@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Problems</h2>
+        <a th:href="@{/problems/new}" class="btn btn-primary">New Problem</a>
+    </div>
+
+    <form th:action="@{/problems}" method="get" class="row g-2 mb-4">
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="Search by title...">
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="categoryId">
+                <option value="">All Categories</option>
+                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"
+                        th:selected="${categoryId != null && categoryId == cat.id}"></option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="difficulty">
+                <option value="">All Difficulties</option>
+                <option th:each="d : ${difficulties}" th:value="${d}" th:text="${d}"
+                        th:selected="${difficulty != null && difficulty.name() == d.name()}"></option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="status">
+                <option value="">All Statuses</option>
+                <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"
+                        th:selected="${status != null && status.name() == s.name()}"></option>
+            </select>
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-outline-primary w-100">Filter</button>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th><a th:href="@{/problems(keyword=${keyword},categoryId=${categoryId},difficulty=${difficulty},status=${status},sort='title')}">Title</a></th>
+                <th><a th:href="@{/problems(keyword=${keyword},categoryId=${categoryId},difficulty=${difficulty},status=${status},sort='difficulty')}">Difficulty</a></th>
+                <th>Categories</th>
+                <th><a th:href="@{/problems(keyword=${keyword},categoryId=${categoryId},difficulty=${difficulty},status=${status},sort='status')}">Status</a></th>
+                <th>Source</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${problems}">
+                <td><a th:href="@{/problems/{id}(id=${p.id})}" th:text="${p.title}"></a></td>
+                <td>
+                    <span class="badge" th:classappend="${p.difficulty.name() == 'EASY' ? 'badge-easy' : (p.difficulty.name() == 'MEDIUM' ? 'badge-medium' : 'badge-hard')}"
+                          th:text="${p.difficulty}"></span>
+                </td>
+                <td>
+                    <span th:each="cat : ${p.categories}" class="badge bg-info me-1" th:text="${cat.name}"></span>
+                </td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${p.status.name() == 'SOLVED' ? 'badge-solved' : (p.status.name() == 'FAILED' ? 'badge-failed' : (p.status.name() == 'RETRY' ? 'badge-retry' : 'badge-not-attempted'))}"
+                          th:text="${p.status}"></span>
+                </td>
+                <td>
+                    <a th:if="${p.sourceUrl}" th:href="${p.sourceUrl}" target="_blank" class="btn btn-sm btn-outline-secondary">Link</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</html>
