@@ -1,12 +1,17 @@
 package lemuel.com.codingtest.problem;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProblemRepository extends JpaRepository<Problem, Long> {
+
+    @EntityGraph(attributePaths = {"categories", "solutions"})
+    Optional<Problem> findById(Long id);
     List<Problem> findTop5ByOrderByUpdatedAtDesc();
     List<Problem> findAllByOrderByUpdatedAtDesc();
     long countByStatus(SolveStatus status);
