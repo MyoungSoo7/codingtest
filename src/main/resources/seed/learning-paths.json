@@ -1,0 +1,204 @@
+{
+  "_comment": "카테고리별 학습 순서 추천 + 각 문제의 학습 의도 노트. seed/problems.json 의 title 과 정확히 매칭.",
+  "paths": [
+    {
+      "category": "배열/문자열",
+      "title": "배열·문자열 — 기본기 다지기",
+      "description": "투포인터·해시·prefix sum 같은 기초 패턴 → set/구간 합 → 정수 표현 응용",
+      "steps": [
+        { "title": "Two Sum", "note": "해시맵으로 O(n) — 모든 알고리즘의 출발" },
+        { "title": "Contains Duplicate", "note": "Set 활용 기초" },
+        { "title": "Valid Anagram", "note": "정렬 vs 빈도수 두 방법 비교" },
+        { "title": "Group Anagrams", "note": "정규화 키 (sorted string)" },
+        { "title": "Best Time to Buy and Sell Stock", "note": "1-pass + 최솟값 추적" },
+        { "title": "Product of Array Except Self", "note": "좌/우 prefix product, O(n) 공간 O(1)" },
+        { "title": "Maximum Subarray", "note": "Kadane DP 입문" },
+        { "title": "Set Matrix Zeroes", "note": "첫 행/열 마커 트릭" },
+        { "title": "Spiral Matrix", "note": "경계 4 방향 회전 구현" },
+        { "title": "Rotate Image", "note": "전치 + 행/열 reverse" }
+      ]
+    },
+    {
+      "category": "투포인터/슬라이딩윈도우",
+      "title": "투포인터·슬라이딩 윈도우 — 부분 구간 효율 탐색",
+      "description": "O(n²) → O(n) 으로 줄이는 핵심 도구. 정렬 후 양끝 / 가변 윈도우",
+      "steps": [
+        { "title": "Valid Palindrome", "note": "양끝 포인터 기초" },
+        { "title": "3Sum", "note": "정렬 + 양끝 포인터" },
+        { "title": "Container With Most Water", "note": "더 짧은 쪽 이동" },
+        { "title": "Longest Substring Without Repeating Characters", "note": "가변 윈도우 + 해시" },
+        { "title": "Longest Repeating Character Replacement", "note": "윈도우 안 최빈값" },
+        { "title": "Minimum Window Substring", "note": "shrink/expand 패턴 끝판왕" },
+        { "title": "Remove Nth Node From End Of List", "note": "갭 포인터" }
+      ]
+    },
+    {
+      "category": "해시/맵",
+      "title": "해시 — O(1) 조회의 무기",
+      "description": "조회·중복·빈도수·캐시까지. LRU 까지 가는 흐름",
+      "steps": [
+        { "title": "Two Sum", "note": "해시맵 lookup" },
+        { "title": "Top K Frequent Elements", "note": "빈도수 + 버킷 정렬 or 힙" },
+        { "title": "Group Anagrams", "note": "키 정규화" },
+        { "title": "LRU Cache", "note": "HashMap + Doubly Linked List" },
+        { "title": "LFU Cache", "note": "빈도 + LRU 의 결합 (디자인 끝판왕)" }
+      ]
+    },
+    {
+      "category": "스택/큐",
+      "title": "스택·큐 — 모노톤 / 우선순위로 가는 길",
+      "description": "괄호 매칭 기초 → 모노톤 스택 → 우선순위 큐 응용",
+      "steps": [
+        { "title": "Valid Parentheses", "note": "스택 기초" },
+        { "title": "Daily Temperatures", "note": "모노톤 스택 입문" },
+        { "title": "Largest Rectangle in Histogram", "note": "모노톤 스택 응용 끝판왕" },
+        { "title": "Kth Largest Element in an Array", "note": "최소 힙 size=K" },
+        { "title": "Top K Frequent Elements", "note": "빈도 + 힙" },
+        { "title": "Find Median from Data Stream", "note": "두 힙 (max + min) 균형" },
+        { "title": "Task Scheduler", "note": "max-heap + cooldown" },
+        { "title": "Merge K Sorted Lists", "note": "min-heap of nodes" }
+      ]
+    },
+    {
+      "category": "이진 탐색",
+      "title": "이진 탐색 — 정렬된 공간의 O(log n)",
+      "description": "기본 탐색 → 매개 변수 탐색 (Parametric Search) 까지",
+      "steps": [
+        { "title": "Find Minimum in Rotated Sorted Array", "note": "회전 배열의 변곡점" },
+        { "title": "Search in Rotated Sorted Array", "note": "양쪽 정렬 영역 분기" },
+        { "title": "프로그래머스 - 입국심사", "note": "매개 변수 탐색 입문" },
+        { "title": "프로그래머스 - 징검다리", "note": "매개 변수 탐색 + greedy 검증" },
+        { "title": "Swim in Rising Water", "note": "이진 탐색 + BFS 결합" }
+      ]
+    },
+    {
+      "category": "동적 계획법 (DP)",
+      "title": "DP — 점화식 사고법",
+      "description": "1차원 → 2차원 → 트리/그래프 DP. 결정 트리 → memo → bottom-up",
+      "steps": [
+        { "title": "Climbing Stairs", "note": "1차원 DP 입문 (Fibonacci)" },
+        { "title": "House Robber", "note": "선택 분기 DP" },
+        { "title": "House Robber II", "note": "원형 처리 분리" },
+        { "title": "Coin Change", "note": "Unbounded knapsack" },
+        { "title": "Longest Increasing Subsequence", "note": "O(n²) → O(n log n) 패치 진화" },
+        { "title": "Word Break Problem", "note": "문자열 분할 DP" },
+        { "title": "Decode Ways", "note": "조건부 점화식" },
+        { "title": "Unique Paths", "note": "2차원 격자 DP" },
+        { "title": "Jump Game", "note": "그리디 vs DP 비교" },
+        { "title": "Longest Common Subsequence", "note": "2차원 표 DP 정석" },
+        { "title": "Longest Palindromic Substring", "note": "확장 vs DP 두 방법" },
+        { "title": "Palindromic Substrings", "note": "위 문제 변형" },
+        { "title": "Maximum Product Subarray", "note": "양수/음수 동시 트래킹" },
+        { "title": "프로그래머스 - 정수 삼각형", "note": "경로 합 격자 DP" },
+        { "title": "프로그래머스 - 등굣길", "note": "장애물 + 경로 수 DP" },
+        { "title": "프로그래머스 - N으로 표현", "note": "DP + Set 활용" },
+        { "title": "프로그래머스 - 도둑질", "note": "원형 House Robber 변형" }
+      ]
+    },
+    {
+      "category": "그리디",
+      "title": "그리디 — 탐욕적 선택 + 증명 감각",
+      "description": "정렬 + 매 단계 최선 → 반례 검증",
+      "steps": [
+        { "title": "프로그래머스 - 체육복", "note": "그리디 입문 (체크 + 빌려주기)" },
+        { "title": "프로그래머스 - 큰 수 만들기", "note": "모노톤 스택 그리디" },
+        { "title": "프로그래머스 - 구명보트", "note": "양끝 포인터 그리디" },
+        { "title": "프로그래머스 - 조이스틱", "note": "복합 그리디 (위/아래 + 좌/우)" },
+        { "title": "프로그래머스 - 단속카메라", "note": "구간 정렬 + 매 단계 최우측" },
+        { "title": "Jump Game", "note": "최대 도달점 그리디" },
+        { "title": "Non-overlapping Intervals", "note": "끝점 정렬 그리디" },
+        { "title": "Task Scheduler", "note": "최빈도 + cooldown" }
+      ]
+    },
+    {
+      "category": "그래프 (BFS/DFS)",
+      "title": "그래프 — BFS/DFS 시작점",
+      "description": "격자 → 인접 리스트 → 위상 정렬 → 다중 시작점",
+      "steps": [
+        { "title": "Number of Islands", "note": "격자 BFS/DFS 기초" },
+        { "title": "프로그래머스 - 타겟 넘버", "note": "DFS 백트래킹 입문" },
+        { "title": "프로그래머스 - 네트워크", "note": "연결 요소 카운트" },
+        { "title": "Clone Graph", "note": "DFS + 해시 매핑" },
+        { "title": "Course Schedule", "note": "위상 정렬 (BFS Kahn or DFS cycle)" },
+        { "title": "Pacific Atlantic Water Flow", "note": "역방향 다중 시작점 BFS" },
+        { "title": "Word Search", "note": "DFS 백트래킹 + 격자" },
+        { "title": "프로그래머스 - 단어 변환", "note": "BFS 최단 단계" },
+        { "title": "프로그래머스 - 여행경로", "note": "오일러 경로 (DFS 사전순)" },
+        { "title": "Binary Tree Level Order Traversal", "note": "트리에서 BFS" },
+        { "title": "Alien Dictionary", "note": "위상 정렬 응용 (어려움)" }
+      ]
+    },
+    {
+      "category": "최단 경로",
+      "title": "최단 경로 — Dijkstra / Bellman-Ford / BFS",
+      "description": "가중치 0/1 → 양수 → 음수 가능 의 진화 흐름",
+      "steps": [
+        { "title": "프로그래머스 - 가장 먼 노드", "note": "BFS 최단 거리 카운트" },
+        { "title": "Network Delay Time", "note": "Dijkstra 입문" },
+        { "title": "Cheapest Flights Within K Stops", "note": "K-step 제약 + Bellman-Ford" },
+        { "title": "Swim in Rising Water", "note": "Dijkstra 변형 (max edge minimize)" },
+        { "title": "프로그래머스 - 순위", "note": "Floyd-Warshall 입문" }
+      ]
+    },
+    {
+      "category": "유니온파인드/MST",
+      "title": "유니온파인드 — 연결 + 사이클 감지 + MST",
+      "description": "Disjoint Set 으로 시작 → Kruskal MST → 응용",
+      "steps": [
+        { "title": "Number of Connected Components in an Undirected Graph", "note": "Union-Find 입문" },
+        { "title": "Graph Valid Tree", "note": "Union-Find 로 사이클 검출" },
+        { "title": "Longest Consecutive Sequence", "note": "Union-Find 또는 해시" },
+        { "title": "Min Cost to Connect All Points", "note": "Prim or Kruskal MST" },
+        { "title": "프로그래머스 - 섬 연결하기", "note": "Kruskal MST 한국어 버전" }
+      ]
+    },
+    {
+      "category": "트리/이진트리",
+      "title": "트리 — 재귀 사고법 + BST + Trie",
+      "description": "기본 순회 → BST 성질 → LCA → Trie 까지",
+      "steps": [
+        { "title": "Maximum Depth of Binary Tree", "note": "재귀 기본" },
+        { "title": "Same Tree", "note": "두 트리 비교 재귀" },
+        { "title": "Invert Binary Tree", "note": "후위 swap" },
+        { "title": "Subtree of Another Tree", "note": "이중 재귀" },
+        { "title": "Binary Tree Level Order Traversal", "note": "BFS 큐" },
+        { "title": "Construct Binary Tree from Preorder and Inorder Traversal", "note": "분할 정복 + 해시 인덱싱" },
+        { "title": "Validate Binary Search Tree", "note": "min/max 경계 전달" },
+        { "title": "Kth Smallest Element in a BST", "note": "중위 순회 = 정렬 순서" },
+        { "title": "Lowest Common Ancestor of a Binary Search Tree", "note": "BST 성질 활용" },
+        { "title": "Binary Tree Maximum Path Sum", "note": "재귀에서 global 추적" },
+        { "title": "Serialize and Deserialize Binary Tree", "note": "전위 + null 표시" },
+        { "title": "Implement Trie (Prefix Tree)", "note": "Trie 자료 구조 직접 구현" },
+        { "title": "Add and Search Word", "note": "Trie + DFS 검색" },
+        { "title": "Word Search II", "note": "Trie + 격자 DFS (Trie 의 진가)" }
+      ]
+    },
+    {
+      "category": "백트래킹",
+      "title": "백트래킹 — 가지치기로 살리는 탐색",
+      "description": "순열 → 조합 → 부분집합 → 가지치기 응용",
+      "steps": [
+        { "title": "Subsets", "note": "백트래킹 입문" },
+        { "title": "Permutations", "note": "사용 표시 + 순서" },
+        { "title": "Combination Sum", "note": "중복 허용 조합" },
+        { "title": "Letter Combinations of a Phone Number", "note": "문자열 곱 백트래킹" },
+        { "title": "Generate Parentheses", "note": "남은 열기/닫기 카운트" },
+        { "title": "Word Search", "note": "격자 백트래킹" },
+        { "title": "프로그래머스 - 소수 찾기", "note": "순열 + 소수 판별" },
+        { "title": "N-Queens", "note": "백트래킹 끝판왕" }
+      ]
+    },
+    {
+      "category": "비트마스킹",
+      "title": "비트마스킹 — 부분집합의 압축 표현",
+      "description": "비트 연산 기초 → 부분집합 → DP 결합",
+      "steps": [
+        { "title": "Number of 1 Bits", "note": "popcount" },
+        { "title": "Reverse Bits", "note": "비트 회전" },
+        { "title": "Missing Number", "note": "XOR 트릭" },
+        { "title": "Counting Bits", "note": "DP + 비트" },
+        { "title": "Sum of Two Integers", "note": "비트 연산만으로 덧셈" }
+      ]
+    }
+  ]
+}
