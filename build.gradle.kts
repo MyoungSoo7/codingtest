@@ -22,7 +22,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.springframework.boot:spring-boot-starter-json")  // Jackson — SeedDataLoader / LearningPathService 에서 ObjectMapper 사용
+    // Jackson — Spring Boot 4 의 starter-json/webmvc 가 transitive 자동 포함 안 함.
+    // SeedDataLoader / LearningPathService 의 ObjectMapper, JsonNode, TypeReference 사용 위해 직접 명시.
+    implementation("org.springframework.boot:spring-boot-starter-json")
+    implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:4.0.1")
     runtimeOnly("com.h2database:h2")
     compileOnly("org.projectlombok:lombok")
