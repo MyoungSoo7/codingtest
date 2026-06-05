@@ -1,0 +1,20 @@
+{
+  "categories": [
+    { "name": "배열/문자열", "description": "기본 자료구조와 문자열 처리. 투포인터, 슬라이딩 윈도우 포함" },
+    { "name": "해시/맵", "description": "HashMap/HashSet 을 활용한 O(1) 조회 패턴" },
+    { "name": "스택/큐", "description": "LIFO/FIFO 자료구조. 모노톤 스택, 우선순위 큐 포함" },
+    { "name": "정렬", "description": "Quick, Merge, Heap, 카운팅 정렬과 정렬 응용 문제" },
+    { "name": "이진 탐색", "description": "정렬된 배열의 O(log n) 탐색과 매개 변수 탐색" },
+    { "name": "투포인터/슬라이딩윈도우", "description": "두 포인터로 부분 수열 / 윈도우를 효율적으로 탐색" },
+    { "name": "동적 계획법 (DP)", "description": "Memoization + Tabulation. LIS, LCS, knapsack, 트리/그래프 DP" },
+    { "name": "그리디", "description": "탐욕적 선택이 최적해를 보장하는 문제 패턴" },
+    { "name": "그래프 (BFS/DFS)", "description": "너비/깊이 우선 탐색, 연결 요소, 최단 경로 기초" },
+    { "name": "최단 경로", "description": "Dijkstra, Bellman-Ford, Floyd-Warshall" },
+    { "name": "유니온파인드/MST", "description": "Disjoint Set + Kruskal/Prim 최소 신장 트리" },
+    { "name": "트리/이진트리", "description": "전위/중위/후위 순회, LCA, 세그먼트 트리, 펜윅 트리" },
+    { "name": "백트래킹", "description": "순열/조합/부분집합 + 가지치기" },
+    { "name": "비트마스킹", "description": "비트 연산을 활용한 부분집합 표현과 DP" },
+    { "name": "수학/구현", "description": "정수론, 조합, 시뮬레이션, 구현 위주" },
+    { "name": "분할 정복", "description": "Divide and Conquer. Merge sort, Quick select, 거듭제곱" }
+  ]
+}
