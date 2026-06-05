@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${path.title}">학습 경로</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/learning-paths}">학습 경로</a></li>
+            <li class="breadcrumb-item active" th:text="${path.category}">카테고리</li>
+        </ol>
+    </nav>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title" th:text="${path.title}">제목</h2>
+            <p class="text-muted" th:text="${path.description}">설명</p>
+            <span class="badge bg-secondary"
+                  th:text="${#lists.size(path.steps)} + ' steps'">N steps</span>
+        </div>
+    </div>
+
+    <div class="list-group shadow-sm">
+        <div class="list-group-item" th:each="rs, iter : ${resolvedSteps}">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="me-3" style="min-width: 0;">
+                    <div class="mb-1">
+                        <span class="badge bg-dark me-2" th:text="${iter.index + 1}">1</span>
+                        <strong th:if="${rs.problem != null}">
+                            <a th:href="@{|/problems/${rs.problem.id}|}"
+                               th:text="${rs.step.title}"
+                               class="text-decoration-none">제목</a>
+                        </strong>
+                        <span th:if="${rs.problem == null}"
+                              class="text-muted" th:text="${rs.step.title}">제목 (미등록)</span>
+
+                        <th:block th:if="${rs.problem != null and rs.problem.difficulty != null}">
+                            <span th:if="${rs.problem.difficulty.name() == 'EASY'}"
+                                  class="badge badge-easy ms-2">EASY</span>
+                            <span th:if="${rs.problem.difficulty.name() == 'MEDIUM'}"
+                                  class="badge badge-medium ms-2">MEDIUM</span>
+                            <span th:if="${rs.problem.difficulty.name() == 'HARD'}"
+                                  class="badge badge-hard ms-2">HARD</span>
+                        </th:block>
+                    </div>
+                    <div class="small text-muted" th:text="${rs.step.note}">학습 의도 노트</div>
+                </div>
+
+                <div class="text-end">
+                    <th:block th:if="${rs.problem != null and rs.problem.status != null}">
+                        <span th:if="${rs.problem.status.name() == 'SOLVED'}"
+                              class="badge badge-solved">✓ 해결</span>
+                        <span th:if="${rs.problem.status.name() == 'FAILED'}"
+                              class="badge badge-failed">✗ 실패</span>
+                        <span th:if="${rs.problem.status.name() == 'RETRY'}"
+                              class="badge badge-retry">↻ 재시도</span>
+                        <span th:if="${rs.problem.status.name() == 'NOT_ATTEMPTED'}"
+                              class="badge badge-not-attempted">미시도</span>
+                    </th:block>
+                    <span th:if="${rs.problem == null}" class="badge bg-light text-dark border">DB 없음</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 small text-muted">
+        💡 진행 중인 step 을 클릭하면 문제 상세로 이동. 회색 *''***미등록***''* 은 <code>seed/problems.json</code> 에 추가 필요.
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Learning Paths</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>🎓 학습 경로</h2>
+        <span class="text-muted small">카테고리별 추천 학습 순서와 학습 의도 노트</span>
+    </div>
+
+    <div class="alert alert-light border" th:if="${#lists.isEmpty(paths)}">
+        등록된 학습 경로가 없습니다. <code>seed/learning-paths.json</code> 을 확인해주세요.
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-3" th:if="${not #lists.isEmpty(paths)}">
+        <div class="col" th:each="p : ${paths}">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a th:href="@{|/learning-paths/${#strings.replace(p.category, '/', '%2F')}|}"
+                           th:text="${p.title}"
+                           class="text-decoration-none">제목</a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="${p.category}">카테고리</h6>
+                    <p class="card-text small" th:text="${p.description}">설명</p>
+                    <span class="badge bg-secondary"
+                          th:text="${#lists.size(p.steps)} + ' steps'">N steps</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
