@@ -15,3 +15,7 @@ spring:
       ddl-auto: update
     show-sql: true
     open-in-view: false
+
+# n8n 매일 문제·풀이 API 의 저장 키 (X-Api-Key). 비어 있으면 저장 API 는 503.
+codingtest:
+  api-key: ${CODINGTEST_API_KEY:}
