@@ -39,6 +39,17 @@ public class DailyService {
         return dailyPickRepository.findByPickDate(date);
     }
 
+    /** {@link #find} 를 트랜잭션 안에서 응답으로 바꾼다. */
+    public Optional<DailyView> findView(LocalDate date) {
+        return find(date).map(DailyView::of);
+    }
+
+    /** {@link #pick} 을 트랜잭션 안에서 응답으로 바꾼다. */
+    @Transactional
+    public Optional<DailyView> pickView(LocalDate date) {
+        return pick(date).map(DailyView::of);
+    }
+
     /** 그 날짜의 문제를 돌려준다. 없으면 다음 문제를 뽑아 고정한다. 남은 문제가 없으면 empty. */
     @Transactional
     public Optional<DailyPick> pick(LocalDate date) {

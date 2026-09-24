@@ -1,7 +1,5 @@
 package lemuel.com.codingtest.daily;
 
-import lemuel.com.codingtest.category.Category;
-import lemuel.com.codingtest.problem.Problem;
 import lemuel.com.codingtest.solution.Language;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,32 +30,21 @@ public class DailyApiController {
     @Value("${codingtest.api-key:}")
     private String apiKey;
 
-    public record DailyView(String date, Long problemId, String title, String difficulty, String sourceUrl,
-                            List<String> categories, String hint, Long solutionId) {
-        static DailyView of(DailyPick d) {
-            Problem p = d.getProblem();
-            return new DailyView(d.getPickDate().toString(), p.getId(), p.getTitle(),
-                p.getDifficulty() == null ? null : p.getDifficulty().name(), p.getSourceUrl(),
-                p.getCategories().stream().map(Category::getName).sorted().toList(),
-                d.getHint(), d.getSolutionId());
-        }
-    }
-
     public record SolutionRequest(String code, Language language, String note) {}
 
     /** 오늘(KST) 문제. 처음 부르면 뽑아서 고정한다. 남은 문제가 없으면 404. */
     @GetMapping("/today")
     public ResponseEntity<?> today() {
-        return dailyService.pick(dailyService.today())
-            .<ResponseEntity<?>>map(d -> ResponseEntity.ok(DailyView.of(d)))
+        return dailyService.pickView(dailyService.today())
+            .<ResponseEntity<?>>map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "no problems left")));
     }
 
     /** 그 날짜 문제 조회만(뽑지 않음). */
     @GetMapping("/{date}")
     public ResponseEntity<?> byDate(@PathVariable LocalDate date) {
-        return dailyService.find(date)
-            .<ResponseEntity<?>>map(d -> ResponseEntity.ok(DailyView.of(d)))
+        return dailyService.findView(date)
+            .<ResponseEntity<?>>map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "no pick for " + date)));
     }
 
